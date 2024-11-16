@@ -1,0 +1,27 @@
+desc: Login success case
+steps:
+- Post request:
+    KEY: request_post_from_url
+    URL: "http://example"
+    PARAMS:
+      application_client_type: weixin
+      application: app
+    DATA:
+      accounts: xxx
+      pwd: xxxx
+      type: username
+- get MSG from response:
+     KEY: ex_jsonData
+     EXVALUE: $..msg
+     INDEX: 0
+     VARNAME: msg_success
+- Compare the msg:
+    KEY: assert_text_comparators
+    VALUE: msg_success
+    EXPECTED: 登录成功
+    OP_STR: ==
+- get data from mysql:
+    KEY: ex_mysqlData
+    DB: mysql001
+    SQL: SELECT id,nickname FROM sxo_user WHERE nickname = "xxx"
+    VAR: id,nickname
